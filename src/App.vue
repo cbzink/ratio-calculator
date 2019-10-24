@@ -15,12 +15,12 @@
             <div class="rounded-b border-t border-gray-400 bg-blue-100 flex items-center justify-between">
                 <div class="text-center w-1/2 border-r border-gray-400 py-4">
                     <div class="text-xs uppercase font-bold text-gray-600">High</div>
-                    <div class="text-xl">{{ high }}</div>
+                    <div class="text-xl">{{ calculate(1) }}</div>
                 </div>
 
                 <div class="text-center w-1/2">
                     <div class="text-xs uppercase font-bold text-gray-600">Low</div>
-                    <div class="text-xl">{{ low }}</div>
+                    <div class="text-xl">{{ calculate(0.98) }}</div>
                 </div>
             </div>
         </div>
@@ -36,35 +36,23 @@ export default {
         }
     },
 
+    methods: {
+        calculate(modifier) {
+            if (this.valuesAreEmpty) {
+                return '--';
+            }
+
+            let result = (100 / this.ae * modifier * this.ew / 100).toFixed(2);
+
+            if (result === 'NaN') {
+                return '(error)';
+            }
+
+            return result;
+        },
+    },
+
     computed: {
-        high() {
-            if (this.valuesAreEmpty) {
-                return '--';
-            }
-
-            let result = (100 / this.ae * 1 * this.ew / 100).toFixed(2);
-
-            if (result === 'NaN') {
-                return '(error)';
-            }
-
-            return result;
-        },
-
-        low() {
-            if (this.valuesAreEmpty) {
-                return '--';
-            }
-
-            let result = (100 / this.ae * 0.98 * this.ew / 100).toFixed(2);
-
-            if (result === 'NaN') {
-                return '(error)';
-            }
-
-            return result;
-        },
-
         valuesAreEmpty() {
             if(
                 this.ae === null
