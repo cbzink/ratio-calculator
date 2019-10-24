@@ -2,6 +2,8 @@
 
 I have absolutely no idea what this is calculating. A friend asked me to build it for him and gave me the formula, and I delivered. If this calculates the secret codes to launch World War III, I sincerely apologize.
 
+Demo: [https://ratio-calculator.netlify.com/](https://ratio-calculator.netlify.com/)
+
 ## Quick deployment
 
 The `dist/` directory is pre-compiled and ready to go. Drop it on the web server of your choice, or even a static site host like Github Pages or Netlify and you're set.
