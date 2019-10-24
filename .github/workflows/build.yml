@@ -22,14 +22,13 @@ jobs:
     - name: npm run prod
       run: npm run prod
     
-    - name: Commit files
+    - name: Commit files and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_REPO_SECRET }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git checkout master
         git add .
-        git commit -m "Build production assets (Github Actions) [ci-skip]" -a
-        
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_REPO_SECRET }}
+        git diff --quiet && git diff --staged --quiet || (git commit -am "Build production assets (Github Actions) [ci-skip]"; git push origin master)
