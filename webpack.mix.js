@@ -9,12 +9,14 @@ if (!mix.inProduction()) {
     var outputPath = 'build';
 }
 
-console.error(outputPath);
-
-mix.js('src/app.js', outputPath)
+mix.js('src/app.js', outputPath).extract()
    .sass('src/style.scss', outputPath).options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.config.js') ],
-   }).purgeCss()
+   })
+   .purgeCss({
+        folders: ['src'],
+        extensions: ['html', 'js', 'vue'],
+   })
    .copy('src/*.html', outputPath)
    .setPublicPath(outputPath);
